@@ -1,55 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Pokédex Animation - PokéWorld</title>
+  <meta charset="UTF-8">
+  <title>Pokédex Animation</title>
   <style>
-    /* Dark theme base */
     body {
       font-family: 'Arial', sans-serif;
+      text-align: center;
       margin: 0;
       padding: 30px;
-      background: #121212;
-      color: #eee;
-      text-align: center;
-      transition: background 1s ease, color 1s ease;
-      overflow-x: hidden;
+      transition: background 1s ease;
+      background: linear-gradient(#121212, #1e1e1e); /* Dark theme */
+      color: #f0f0f0;
     }
+
     h1 {
-      color: #ff6f91; /* pinkish */
-      margin-bottom: 10px;
+      color: #f44336;
     }
-    p.description {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: 0 auto 20px auto;
-      color: #ddd;
-    }
-    #ashContainer {
-      margin-bottom: 20px;
-    }
-    #ashContainer img {
-      width: 160px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255,111,145,0.8);
-      animation: float 4s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
+
     .pokeball {
       width: 100px;
       height: 100px;
-      background: radial-gradient(circle at center, white 45%, black 45%);
+      background: radial-gradient(white 45%, black 45%);
       border: 5px solid black;
       border-radius: 50%;
       margin: 20px auto;
       position: relative;
       animation: pulse 2s infinite;
       cursor: pointer;
-      box-shadow: 0 0 10px #fff;
     }
+
     .pokeball::before {
       content: '';
       position: absolute;
@@ -60,6 +40,7 @@
       border-top-left-radius: 100px;
       border-top-right-radius: 100px;
     }
+
     .pokeball::after {
       content: '';
       position: absolute;
@@ -71,331 +52,160 @@
       border: 3px solid black;
       border-radius: 50%;
     }
+
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
-    .throw-animation {
-      animation: throw 0.7s ease-out forwards;
-    }
-    @keyframes throw {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
-    }
-    input {
-      padding: 10px;
-      font-size: 16px;
-      width: 140px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      border: 2px solid #444;
-      background: #222;
-      color: #eee;
-      transition: border-color 0.3s;
-    }
-    input:focus {
-      outline: none;
-      border-color: #ff6f91;
-      background: #333;
-    }
-    button {
-      padding: 10px 25px;
-      font-size: 16px;
-      background-color: #ff6f91;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      box-shadow: 0 0 10px #ff6f91;
-    }
-    button:hover {
-      background-color: #d4556f;
-    }
+
     .pokemon-card {
       display: none;
       margin-top: 30px;
-      background: #222;
-      padding: 20px;
-      border-radius: 15px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 0 20px rgba(255, 111, 145, 0.6);
-      color: #eee;
     }
+
     .pokemon-card img {
       width: 250px;
       height: auto;
       margin-top: 10px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255, 111, 145, 0.8);
-    }
-    #stats {
-      margin-top: 15px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      line-height: 1.4;
     }
 
-    /* Background animations for dark themes */
-    body.fire-bg {
-      background: linear-gradient(#b03a0f, #4a1500);
-      animation: fire 2s infinite alternate;
-      color: #fff3e0;
-    }
-    @keyframes fire {
-      0% { background-color: #d84315; }
-      100% { background-color: #ff7043; }
-    }
-    body.water-bg {
-      background: linear-gradient(#003c6e, #1a237e);
-      animation: water 3s infinite alternate;
-      color: #bbdefb;
-    }
-    @keyframes water {
-      0% { background-color: #0288d1; }
-      100% { background-color: #0277bd; }
-    }
-    body.grass-bg {
-      background: linear-gradient(#1b5e20, #4caf50);
-      animation: grass 3s infinite alternate;
-      color: #c8e6c9;
-    }
-    @keyframes grass {
-      0% { background-color: #2e7d32; }
-      100% { background-color: #81c784; }
-    }
-    body.electric-bg {
-      background: linear-gradient(#fbc02d, #f9a825);
-      animation: electric 2.5s infinite alternate;
-      color: #3e2723;
-    }
-    @keyframes electric {
-      0% { background-color: #fdd835; }
-      100% { background-color: #fbc02d; }
-    }
-    body.poison-bg {
-      background: linear-gradient(#6a1b9a, #8e24aa);
-      animation: poison 3s infinite alternate;
-      color: #e1bee7;
-    }
-    @keyframes poison {
-      0% { background-color: #7b1fa2; }
-      100% { background-color: #9c27b0; }
-    }
-    body.fighting-bg {
-      background: linear-gradient(#bf360c, #d84315);
-      animation: fighting 2s infinite alternate;
-      color: #fff3e0;
-    }
-    @keyframes fighting {
-      0% { background-color: #e64a19; }
-      100% { background-color: #ff7043; }
-    }
-    body.rock-bg {
-      background: linear-gradient(#3e2723, #5d4037);
-      animation: rock 4s infinite alternate;
-      color: #d7ccc8;
-    }
-    @keyframes rock {
-      0% { background-color: #4e342e; }
-      100% { background-color: #6d4c41; }
+    .throw-animation {
+      animation: throw 0.7s ease-out;
     }
 
-    /* Heart dark theme for Nikimon */
-    body.nikimon-bg {
-      background: radial-gradient(circle at center, #ff6f91 0%, #a8324a 70%);
-      color: #fff;
+    @keyframes throw {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
     }
 
-    /* Hide/show interfaces */
-    #welcomeInterface, #pokemonInterface {
-      max-width: 650px;
-      margin-left: auto;
-      margin-right: auto;
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 80px;
+      margin-bottom: 10px;
     }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ef5350;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d32f2f;
+    }
+
+    .intro {
+      margin-bottom: 30px;
+    }
+
+    .intro img {
+      max-width: 300px;
+      border-radius: 16px;
+      margin-top: 20px;
+    }
+
+    body.fire-bg { background: linear-gradient(#ff5722, #ffe0b2); }
+    body.water-bg { background: linear-gradient(#0288d1, #b3e5fc); }
+    body.grass-bg { background: linear-gradient(#66bb6a, #dcedc8); }
+    body.electric-bg { background: linear-gradient(#fbc02d, #fff9c4); }
+    body.poison-bg { background: linear-gradient(#9c27b0, #e1bee7); }
+    body.fighting-bg { background: linear-gradient(#d84315, #ffe0b2); }
+    body.rock-bg { background: linear-gradient(#6d4c41, #d7ccc8); }
+    body.heart-bg { background: linear-gradient(#880e4f, #f8bbd0); }
   </style>
 </head>
 <body>
 
-  <!-- Background Music (muted initially) -->
-  <audio id="bgMusic" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-epic.mp3" type="audio/mp3" />
-    Your browser does not support the audio element.
-  </audio>
+  <!-- 🔊 Background Music Placeholder -->
+  <!-- Replace below with working .mp3 link -->
+  <!-- <audio id="bgMusic" autoplay loop>
+    <source src="YOUR_VALID_MP3_LINK_HERE" type="audio/mp3">
+  </audio> -->
 
-  <!-- Welcome Interface -->
-  <div id="welcomeInterface">
+  <div class="intro">
     <h1>Welcome to the PokéWorld!</h1>
-    <div id="ashContainer">
-  <img
-    src="https://i.ibb.co/Q36g6vsD/Q36g6vsD.jpg"
-    alt="Ash Ketchum"
-    crossorigin="anonymous"
-  />
-    </div>
-    <p class="description">
-      Hello, Trainer! I'm Ash Ketchum. Welcome to the world of Pokémon. Here, you can explore various Pokémon by entering their Pokédex IDs.
-      Each Pokémon has unique types, stats like height, weight, and power. Choose wisely and discover their secrets!
-    </p>
-    <button id="startBtn">Let's Go!</button>
+    <p>Hi! I'm Ash Ketchum. Ready to explore the amazing world of Pokémon?<br>
+       Enter a Pokédex ID to learn about height, weight, power, and more!</p>
+    <img src="https://i.ibb.co/NspF8Zd/ash-ketchum.jpg" alt="Ash Ketchum">
   </div>
 
-  <!-- Pokémon Interface (hidden initially) -->
-  <div id="pokemonInterface" style="display:none;">
-    <div class="pokeball" id="pokeball" title="Throw Pokéball"></div>
+  <div class="pokeball" id="pokeball"></div>
 
-    <input
-      type="number"
-      id="pokeNumber"
-      placeholder="Enter ID (1-1010 or 1600)"
-      min="1"
-      max="1600"
-    />
-    <button id="catchBtn">Catch Pokémon</button>
+  <input type="number" id="pokeNumber" placeholder="Enter ID (1-1010 or 1600)" min="1" max="1600">
+  <button onclick="fetchPokemon()">Catch Pokémon</button>
 
-    <div class="pokemon-card" id="pokemonCard">
-      <h2 id="pokeName"></h2>
-      <p id="pokeType"></p>
-      <div id="stats">
-        <p id="pokeHeight"></p>
-        <p id="pokeWeight"></p>
-        <p id="pokePower"></p>
-      </div>
-      <img id="pokeImage" src="" alt="Pokemon Image" />
-    </div>
+  <div class="pokemon-card" id="pokemonCard">
+    <h2 id="pokeName"></h2>
+    <p id="pokeType"></p>
+    <p id="pokeStats"></p>
+    <img id="pokeImage" src="" alt="Pokemon Image">
   </div>
 
   <script>
-    // Get music element
-    const bgMusic = document.getElementById('bgMusic');
-    const startBtn = document.getElementById('startBtn');
-    const catchBtn = document.getElementById('catchBtn');
-    const pokeball = document.getElementById('pokeball');
-
-    // Play music only after user clicks start (to avoid autoplay block)
-    startBtn.addEventListener('click', () => {
-      document.getElementById('welcomeInterface').style.display = 'none';
-      document.getElementById('pokemonInterface').style.display = 'block';
-
-      // Play bg music now after user interaction
-      bgMusic.volume = 0.3;
-      bgMusic.play().catch((e) => {
-        // in case of error, ignore
-        console.log('Audio play error:', e);
-      });
-    });
-
-    catchBtn.addEventListener('click', fetchPokemon);
-
     function fetchPokemon() {
-      const id = document.getElementById('pokeNumber').value.trim();
+      const id = document.getElementById("pokeNumber").value;
+      const pokeball = document.getElementById("pokeball");
 
-      if (!id || (Number(id) < 1 && id !== '1600') || (Number(id) > 1010 && id !== '1600')) {
-        alert('Please enter a valid Pokémon ID (1–1010 or 1600)');
+      if (!id || id < 1 || id > 1600) {
+        alert("Please enter a valid Pokémon ID (1–1010 or 1600)");
         return;
       }
 
-      pokeball.classList.add('throw-animation');
+      pokeball.classList.add("throw-animation");
 
       setTimeout(() => {
-        pokeball.classList.remove('throw-animation');
+        pokeball.classList.remove("throw-animation");
 
-        const card = document.getElementById('pokemonCard');
-        card.style.display = 'none';
+        if (id === "1600") {
+          document.getElementById("pokeName").textContent = "Nikimon";
+          document.getElementById("pokeType").textContent = "Type: Legendary, Friendly, Warrior";
+          document.getElementById("pokeStats").textContent = "Height: 5'9\", Weight: 70kg, Power: ❤️ 9999";
+          document.getElementById("pokeImage").src = "https://i.postimg.cc/j2rk404z/Whats-App-Image-2025-06-09-at-08-32-37-429fc407.jpg";
+          document.getElementById("pokemonCard").style.display = "block";
 
-        if (id === '1600') {
-          // Custom Nikimon data
-          document.getElementById('pokeName').textContent = 'Nikimon';
-          document.getElementById('pokeType').textContent = 'Type: Heart';
-          document.getElementById('pokeHeight').textContent = 'Height: 1.6 m';
-          document.getElementById('pokeWeight').textContent = 'Weight: 60 kg';
-          document.getElementById('pokePower').textContent = 'Power: 1600';
-          document.getElementById('pokeImage').src =
-            'https://i.postimg.cc/j2rk404z/Whats-App-Image-2025-06-09-at-08-32-37-429fc407.jpg';
-          card.style.display = 'block';
+          document.body.className = "heart-bg";
+        } else {
+          fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+            .then(res => res.json())
+            .then(data => {
+              const name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+              const types = data.types.map(t => t.type.name).join(", ");
+              const image = data.sprites.other["official-artwork"].front_default;
+              const height = data.height / 10 + "m";
+              const weight = data.weight / 10 + "kg";
+              const baseExp = data.base_experience;
 
-          // Heart-themed dark background for Nikimon
-          document.body.className = '';
-          document.body.classList.add('nikimon-bg');
-          return;
+              document.getElementById("pokeName").textContent = name;
+              document.getElementById("pokeType").textContent = "Type: " + types;
+              document.getElementById("pokeStats").textContent = `Height: ${height}, Weight: ${weight}, Power: ${baseExp}`;
+              document.getElementById("pokeImage").src = image;
+              document.getElementById("pokemonCard").style.display = "block";
+
+              // Type background
+              const type = data.types[0].type.name.toLowerCase();
+              const typeClasses = {
+                fire: "fire-bg",
+                water: "water-bg",
+                grass: "grass-bg",
+                electric: "electric-bg",
+                poison: "poison-bg",
+                fighting: "fighting-bg",
+                ground: "rock-bg",
+                rock: "rock-bg"
+              };
+              document.body.className = typeClasses[type] || "";
+            })
+            .catch(() => alert("Pokémon not found!"));
         }
-
-        // Normal API fetch
-        fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-          .then((res) => {
-            if (!res.ok) throw new Error('Pokémon not found');
-            return res.json();
-          })
-          .then((data) => {
-            const name =
-              data.name.charAt(0).toUpperCase() + data.name.slice(1);
-            const types = data.types
-              .map(
-                (t) =>
-                  t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)
-              )
-              .join(', ');
-            const image = data.sprites.other['official-artwork'].front_default;
-
-            const height = (data.height / 10).toFixed(1);
-            const weight = (data.weight / 10).toFixed(1);
-            const power = data.stats.reduce(
-              (total, stat) => total + stat.base_stat,
-              0
-            );
-
-            document.getElementById('pokeName').textContent = name;
-            document.getElementById('pokeType').textContent = 'Type: ' + types;
-            document.getElementById('pokeHeight').textContent =
-              'Height: ' + height + ' m';
-            document.getElementById('pokeWeight').textContent =
-              'Weight: ' + weight + ' kg';
-            document.getElementById('pokePower').textContent =
-              'Power: ' + power;
-            document.getElementById('pokeImage').src = image;
-            card.style.display = 'block';
-
-            // Background based on primary type
-            const mainType = data.types[0].type.name.toLowerCase();
-            document.body.className = '';
-
-            switch (mainType) {
-              case 'fire':
-                document.body.classList.add('fire-bg');
-                break;
-              case 'water':
-                document.body.classList.add('water-bg');
-                break;
-              case 'grass':
-                document.body.classList.add('grass-bg');
-                break;
-              case 'electric':
-                document.body.classList.add('electric-bg');
-                break;
-              case 'poison':
-                document.body.classList.add('poison-bg');
-                break;
-              case 'fighting':
-                document.body.classList.add('fighting-bg');
-                break;
-              case 'ground':
-                document.body.classList.add('rock-bg');
-                break;
-              default:
-                document.body.style.background =
-                  '#121212';
-                document.body.style.color = '#eee';
-                break;
-            }
-          })
-          .catch(() => {
-            alert('Pokémon not found!');
-          });
       }, 700);
     }
   </script>
+
 </body>
 </html>
