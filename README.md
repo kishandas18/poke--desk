@@ -6,7 +6,7 @@ Welcome to the **PokéWorld** – an immersive, animated, and interactive Pokéd
 
 ##  Live Demo
 
->  **[Click here to try the Pokédex](#)** *(Replace with your live project link or GitHub Pages URL)*
+>  **[Click here to try the Pokédex](#)** (https://poke-desk-zeta.vercel.app/)
 
 ---
 
